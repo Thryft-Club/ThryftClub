@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import ProductCard from '../components/ProductCard';
+import { mockProducts, searchProducts, getProductsByCategory } from '../services/mockData';
 
 const { width } = Dimensions.get('window');
 
@@ -21,7 +22,7 @@ interface SearchScreenProps {
 const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState(mockProducts);
 
   const categories = [
     'All',
@@ -33,39 +34,9 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
     'Vehicles',
   ];
 
-  const mockSearchResults = [
-    {
-      id: '1',
-      title: 'iPhone 13 Pro - Excellent Condition',
-      price: 899,
-      image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400',
-      category: 'Electronics',
-      condition: 'Excellent',
-      location: 'New York, NY',
-    },
-    {
-      id: '2',
-      title: 'Nike Air Max 270 - Like New',
-      price: 120,
-      image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400',
-      category: 'Clothing',
-      condition: 'Like New',
-      location: 'Los Angeles, CA',
-    },
-    {
-      id: '3',
-      title: 'MacBook Air M1 - Good Condition',
-      price: 750,
-      image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400',
-      category: 'Electronics',
-      condition: 'Good',
-      location: 'Chicago, IL',
-    },
-  ];
-
   const handleSearch = () => {
-    // Simulate search
-    setSearchResults(mockSearchResults);
+    const results = searchProducts(searchQuery, selectedCategory);
+    setSearchResults(results);
   };
 
   const handleProductPress = (productId: string) => {
@@ -75,7 +46,13 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
 
   const handleCategoryPress = (category: string) => {
     setSelectedCategory(category);
-    // TODO: Filter by category
+    const results = searchProducts(searchQuery, category);
+    setSearchResults(results);
+  };
+
+  const handleFavoritePress = (productId: string) => {
+    console.log('Favorite pressed:', productId);
+    // TODO: Toggle favorite
   };
 
   return (
@@ -148,12 +125,23 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
             <ProductCard
               {...item}
               onPress={() => handleProductPress(item.id)}
-              onFavoritePress={() => console.log('Favorite pressed:', item.id)}
+              onFavoritePress={() => handleFavoritePress(item.id)}
             />
           )}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.resultsList}
         />
+
+        {/* Empty State */}
+        {searchResults.length === 0 && searchQuery && (
+          <View style={styles.emptyState}>
+            <Text style={styles.emptyStateIcon}>🔍</Text>
+            <Text style={styles.emptyStateTitle}>No Results Found</Text>
+            <Text style={styles.emptyStateText}>
+              Try adjusting your search terms or browse categories
+            </Text>
+          </View>
+        )}
       </View>
     </View>
   );
@@ -247,6 +235,28 @@ const styles = StyleSheet.create({
   },
   resultsList: {
     paddingBottom: 20,
+  },
+  emptyState: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 40,
+  },
+  emptyStateIcon: {
+    fontSize: 64,
+    marginBottom: 20,
+  },
+  emptyStateTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 10,
+  },
+  emptyStateText: {
+    fontSize: 16,
+    color: '#666',
+    textAlign: 'center',
+    lineHeight: 24,
   },
 });
 

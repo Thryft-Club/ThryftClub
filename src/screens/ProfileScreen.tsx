@@ -7,8 +7,11 @@ import {
   ScrollView,
   Image,
   Alert,
+  FlatList,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { mockUserProfile, mockUserListings, mockFavorites, mockTransactionHistory } from '../services/mockData';
+import ProductCard from '../components/ProductCard';
 
 interface ProfileScreenProps {
   navigation?: any;
@@ -22,35 +25,26 @@ interface MenuItem {
 }
 
 const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
-  const [userProfile] = useState({
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150',
-    location: 'New York, NY',
-    memberSince: 'March 2024',
-    rating: 4.8,
-    totalSales: 24,
-    totalPurchases: 12,
-  });
+  const [activeTab, setActiveTab] = useState('profile');
 
   const menuItems: MenuItem[] = [
     {
       id: '1',
       title: 'My Listings',
       icon: '📦',
-      action: () => console.log('My Listings pressed'),
+      action: () => setActiveTab('listings'),
     },
     {
       id: '2',
       title: 'Favorites',
       icon: '♥',
-      action: () => console.log('Favorites pressed'),
+      action: () => setActiveTab('favorites'),
     },
     {
       id: '3',
       title: 'Transaction History',
       icon: '📊',
-      action: () => console.log('Transaction History pressed'),
+      action: () => setActiveTab('transactions'),
     },
     {
       id: '4',
@@ -101,6 +95,141 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
     </TouchableOpacity>
   );
 
+  const renderTransactionItem = ({ item }: { item: any }) => (
+    <View style={styles.transactionItem}>
+      <View style={styles.transactionInfo}>
+        <Text style={styles.transactionTitle}>{item.productTitle}</Text>
+        <Text style={styles.transactionDate}>{item.date}</Text>
+      </View>
+      <View style={styles.transactionAmount}>
+        <Text style={[
+          styles.amountText,
+          item.type === 'sale' ? styles.saleAmount : styles.purchaseAmount
+        ]}>
+          {item.type === 'sale' ? '+' : '-'}${item.amount}
+        </Text>
+        <Text style={styles.transactionType}>
+          {item.type === 'sale' ? 'Sale' : 'Purchase'}
+        </Text>
+      </View>
+    </View>
+  );
+
+  const renderProfileContent = () => (
+    <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+      {/* Profile Section */}
+      <View style={styles.profileSection}>
+        <View style={styles.profileHeader}>
+          <Image source={{ uri: mockUserProfile.avatar }} style={styles.avatar} />
+          <View style={styles.profileInfo}>
+            <Text style={styles.profileName}>{mockUserProfile.name}</Text>
+            <Text style={styles.profileEmail}>{mockUserProfile.email}</Text>
+            <Text style={styles.profileLocation}>📍 {mockUserProfile.location}</Text>
+            <Text style={styles.profileMemberSince}>
+              Member since {mockUserProfile.memberSince}
+            </Text>
+          </View>
+        </View>
+
+        {/* Stats */}
+        <View style={styles.statsContainer}>
+          <View style={styles.statItem}>
+            <Text style={styles.statNumber}>{mockUserProfile.rating}</Text>
+            <Text style={styles.statLabel}>Rating</Text>
+          </View>
+          <View style={styles.statDivider} />
+          <View style={styles.statItem}>
+            <Text style={styles.statNumber}>{mockUserProfile.totalSales}</Text>
+            <Text style={styles.statLabel}>Sales</Text>
+          </View>
+          <View style={styles.statDivider} />
+          <View style={styles.statItem}>
+            <Text style={styles.statNumber}>{mockUserProfile.totalPurchases}</Text>
+            <Text style={styles.statLabel}>Purchases</Text>
+          </View>
+        </View>
+      </View>
+
+      {/* Menu Items */}
+      <View style={styles.menuSection}>
+        <Text style={styles.sectionTitle}>Account</Text>
+        {menuItems.map(renderMenuItem)}
+      </View>
+
+      {/* App Info */}
+      <View style={styles.appInfo}>
+        <Text style={styles.appVersion}>Renewly Market v1.0.0</Text>
+        <Text style={styles.appDescription}>
+          Sustainable marketplace for buying and selling
+        </Text>
+      </View>
+    </ScrollView>
+  );
+
+  const renderListingsContent = () => (
+    <View style={styles.tabContent}>
+      <Text style={styles.tabTitle}>My Listings ({mockUserListings.length})</Text>
+      <FlatList
+        data={mockUserListings}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <ProductCard
+            {...item}
+            onPress={() => console.log('Product pressed:', item.id)}
+            onFavoritePress={() => console.log('Favorite pressed:', item.id)}
+          />
+        )}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.productsList}
+      />
+    </View>
+  );
+
+  const renderFavoritesContent = () => (
+    <View style={styles.tabContent}>
+      <Text style={styles.tabTitle}>Favorites ({mockFavorites.length})</Text>
+      <FlatList
+        data={mockFavorites}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <ProductCard
+            {...item}
+            onPress={() => console.log('Product pressed:', item.id)}
+            onFavoritePress={() => console.log('Favorite pressed:', item.id)}
+          />
+        )}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.productsList}
+      />
+    </View>
+  );
+
+  const renderTransactionsContent = () => (
+    <View style={styles.tabContent}>
+      <Text style={styles.tabTitle}>Transaction History</Text>
+      <FlatList
+        data={mockTransactionHistory}
+        keyExtractor={(item) => item.id}
+        renderItem={renderTransactionItem}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.transactionsList}
+      />
+    </View>
+  );
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'listings':
+        return renderListingsContent();
+      case 'favorites':
+        return renderFavoritesContent();
+      case 'transactions':
+        return renderTransactionsContent();
+      default:
+        return renderProfileContent();
+    }
+  };
+
   return (
     <View style={styles.container}>
       {/* Header */}
@@ -111,54 +240,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
         <Text style={styles.headerTitle}>👤 Profile</Text>
       </LinearGradient>
 
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        {/* Profile Section */}
-        <View style={styles.profileSection}>
-          <View style={styles.profileHeader}>
-            <Image source={{ uri: userProfile.avatar }} style={styles.avatar} />
-            <View style={styles.profileInfo}>
-              <Text style={styles.profileName}>{userProfile.name}</Text>
-              <Text style={styles.profileEmail}>{userProfile.email}</Text>
-              <Text style={styles.profileLocation}>📍 {userProfile.location}</Text>
-              <Text style={styles.profileMemberSince}>
-                Member since {userProfile.memberSince}
-              </Text>
-            </View>
-          </View>
-
-          {/* Stats */}
-          <View style={styles.statsContainer}>
-            <View style={styles.statItem}>
-              <Text style={styles.statNumber}>{userProfile.rating}</Text>
-              <Text style={styles.statLabel}>Rating</Text>
-            </View>
-            <View style={styles.statDivider} />
-            <View style={styles.statItem}>
-              <Text style={styles.statNumber}>{userProfile.totalSales}</Text>
-              <Text style={styles.statLabel}>Sales</Text>
-            </View>
-            <View style={styles.statDivider} />
-            <View style={styles.statItem}>
-              <Text style={styles.statNumber}>{userProfile.totalPurchases}</Text>
-              <Text style={styles.statLabel}>Purchases</Text>
-            </View>
-          </View>
-        </View>
-
-        {/* Menu Items */}
-        <View style={styles.menuSection}>
-          <Text style={styles.sectionTitle}>Account</Text>
-          {menuItems.map(renderMenuItem)}
-        </View>
-
-        {/* App Info */}
-        <View style={styles.appInfo}>
-          <Text style={styles.appVersion}>Renewly Market v1.0.0</Text>
-          <Text style={styles.appDescription}>
-            Sustainable marketplace for buying and selling
-          </Text>
-        </View>
-      </ScrollView>
+      {renderContent()}
     </View>
   );
 };
@@ -317,6 +399,71 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#999',
     textAlign: 'center',
+  },
+  tabContent: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 20,
+  },
+  tabTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 15,
+  },
+  productsList: {
+    paddingBottom: 20,
+  },
+  transactionsList: {
+    paddingBottom: 20,
+  },
+  transactionItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 12,
+    marginBottom: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  transactionInfo: {
+    flex: 1,
+  },
+  transactionTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 4,
+  },
+  transactionDate: {
+    fontSize: 12,
+    color: '#666',
+  },
+  transactionAmount: {
+    alignItems: 'flex-end',
+  },
+  amountText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 2,
+  },
+  saleAmount: {
+    color: '#28a745',
+  },
+  purchaseAmount: {
+    color: '#dc3545',
+  },
+  transactionType: {
+    fontSize: 12,
+    color: '#666',
   },
 });
 

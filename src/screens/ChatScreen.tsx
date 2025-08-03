@@ -9,6 +9,7 @@ import {
   TextInput,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { mockChats } from '../services/mockData';
 
 interface ChatScreenProps {
   navigation?: any;
@@ -22,50 +23,14 @@ interface ChatItem {
   unreadCount: number;
   avatar: string;
   isOnline: boolean;
+  productId?: string;
+  productTitle?: string;
+  productImage?: string;
 }
 
 const ChatScreen: React.FC<ChatScreenProps> = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedChat, setSelectedChat] = useState<ChatItem | null>(null);
-
-  const mockChats: ChatItem[] = [
-    {
-      id: '1',
-      name: 'John Smith',
-      lastMessage: 'Is the iPhone still available?',
-      timestamp: '2 min ago',
-      unreadCount: 2,
-      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100',
-      isOnline: true,
-    },
-    {
-      id: '2',
-      name: 'Sarah Johnson',
-      lastMessage: 'I can pick it up tomorrow',
-      timestamp: '1 hour ago',
-      unreadCount: 0,
-      avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100',
-      isOnline: false,
-    },
-    {
-      id: '3',
-      name: 'Mike Wilson',
-      lastMessage: 'What\'s the best price you can do?',
-      timestamp: '3 hours ago',
-      unreadCount: 1,
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100',
-      isOnline: true,
-    },
-    {
-      id: '4',
-      name: 'Emily Davis',
-      lastMessage: 'Thanks for the quick response!',
-      timestamp: '1 day ago',
-      unreadCount: 0,
-      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100',
-      isOnline: false,
-    },
-  ];
 
   const handleChatPress = (chat: ChatItem) => {
     setSelectedChat(chat);
@@ -99,6 +64,16 @@ const ChatScreen: React.FC<ChatScreenProps> = ({ navigation }) => {
             </View>
           )}
         </View>
+
+        {/* Product Context */}
+        {item.productTitle && (
+          <View style={styles.productContext}>
+            <Image source={{ uri: item.productImage }} style={styles.productImage} />
+            <Text style={styles.productTitle} numberOfLines={1}>
+              {item.productTitle}
+            </Text>
+          </View>
+        )}
       </View>
     </TouchableOpacity>
   );
@@ -285,6 +260,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: 8,
   },
   lastMessage: {
     flex: 1,
@@ -305,6 +281,24 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 12,
     fontWeight: 'bold',
+  },
+  productContext: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f8f9fa',
+    padding: 8,
+    borderRadius: 8,
+  },
+  productImage: {
+    width: 20,
+    height: 20,
+    borderRadius: 4,
+    marginRight: 8,
+  },
+  productTitle: {
+    fontSize: 12,
+    color: '#666',
+    flex: 1,
   },
   individualChat: {
     flex: 1,
