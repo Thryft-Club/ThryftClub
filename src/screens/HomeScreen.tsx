@@ -1,43 +1,43 @@
-import React from 'react';
+import React from 'react'
 import {
   View,
   Text,
   StyleSheet,
-  ScrollView,
   TouchableOpacity,
   FlatList,
   Dimensions,
-} from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import ProductCard from '../components/ProductCard';
-import { mockProducts, mockCategories } from '../services/mockData';
+  ScrollView
+} from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient'
+import ProductCard from '../components/ProductCard'
+import { mockProducts, mockCategories } from '../services/mockData'
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get('window')
 
 interface HomeScreenProps {
-  navigation?: any;
+  navigation?: any
 }
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const handleCategoryPress = (category: string) => {
-    console.log('Category pressed:', category);
+    console.log('Category pressed:', category)
     // TODO: Navigate to category page
-  };
+  }
 
   const handleProductPress = (productId: string) => {
-    console.log('Product pressed:', productId);
+    console.log('Product pressed:', productId)
     // TODO: Navigate to product detail
-  };
+  }
 
   const handleFavoritePress = (productId: string) => {
-    console.log('Favorite pressed:', productId);
+    console.log('Favorite pressed:', productId)
     // TODO: Toggle favorite
-  };
+  }
 
   const handleExplorePress = () => {
-    console.log('Explore pressed');
+    console.log('Explore pressed')
     // TODO: Navigate to explore page
-  };
+  }
 
   const renderCategoryItem = ({ item }: { item: any }) => (
     <TouchableOpacity
@@ -48,7 +48,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
       <Text style={styles.categoryName}>{item.name}</Text>
       <Text style={styles.categoryCount}>{item.count} items</Text>
     </TouchableOpacity>
-  );
+  )
 
   const renderProductItem = ({ item }: { item: any }) => (
     <ProductCard
@@ -56,22 +56,24 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
       onPress={() => handleProductPress(item.id)}
       onFavoritePress={() => handleFavoritePress(item.id)}
     />
-  );
+  )
 
   return (
     <View style={styles.container}>
       {/* Header */}
-      <LinearGradient
-        colors={['#007AFF', '#0056CC']}
-        style={styles.header}
-      >
+      <LinearGradient colors={['#007AFF', '#0056CC']} style={styles.header}>
         <View style={styles.headerContent}>
           <Text style={styles.headerTitle}>🌱 Renewly Market</Text>
           <Text style={styles.headerSubtitle}>Sustainable marketplace</Text>
         </View>
       </LinearGradient>
 
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+      {/* Scrollable Content */}
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
         {/* Hero Section */}
         <View style={styles.heroSection}>
           <LinearGradient
@@ -81,9 +83,13 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             <View style={styles.heroContent}>
               <Text style={styles.heroTitle}>Save Money, Save Earth</Text>
               <Text style={styles.heroSubtitle}>
-                Buy and sell quality second-hand items. Reduce waste, find great deals.
+                Buy and sell quality second-hand items. Reduce waste, find great
+                deals.
               </Text>
-              <TouchableOpacity style={styles.heroButton} onPress={handleExplorePress}>
+              <TouchableOpacity
+                style={styles.heroButton}
+                onPress={handleExplorePress}
+              >
                 <Text style={styles.heroButtonText}>Explore Now →</Text>
               </TouchableOpacity>
             </View>
@@ -93,14 +99,19 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         {/* Categories */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Browse Categories</Text>
-          <FlatList
-            data={mockCategories}
-            keyExtractor={(item) => item.id}
-            renderItem={renderCategoryItem}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.categoriesList}
-          />
+          <View style={styles.categoriesContainer}>
+            {mockCategories.map((category) => (
+              <TouchableOpacity
+                key={category.id}
+                style={styles.categoryItem}
+                onPress={() => handleCategoryPress(category.name)}
+              >
+                <Text style={styles.categoryIcon}>{category.icon}</Text>
+                <Text style={styles.categoryName}>{category.name}</Text>
+                <Text style={styles.categoryCount}>{category.count} items</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
         </View>
 
         {/* Featured Products */}
@@ -111,13 +122,16 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
               <Text style={styles.seeAllText}>See All</Text>
             </TouchableOpacity>
           </View>
-          <FlatList
-            data={mockProducts.slice(0, 4)}
-            keyExtractor={(item) => item.id}
-            renderItem={renderProductItem}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.productsList}
-          />
+          <View style={styles.productsContainer}>
+            {mockProducts.slice(0, 4).map((product) => (
+              <ProductCard
+                key={product.id}
+                {...product}
+                onPress={() => handleProductPress(product.id)}
+                onFavoritePress={() => handleFavoritePress(product.id)}
+              />
+            ))}
+          </View>
         </View>
 
         {/* Recent Listings */}
@@ -128,16 +142,19 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
               <Text style={styles.seeAllText}>See All</Text>
             </TouchableOpacity>
           </View>
-          <FlatList
-            data={mockProducts.slice(4, 8)}
-            keyExtractor={(item) => item.id}
-            renderItem={renderProductItem}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.productsList}
-          />
+          <View style={styles.productsContainer}>
+            {mockProducts.slice(4, 8).map((product) => (
+              <ProductCard
+                key={product.id}
+                {...product}
+                onPress={() => handleProductPress(product.id)}
+                onFavoritePress={() => handleFavoritePress(product.id)}
+              />
+            ))}
+          </View>
         </View>
 
-        {/* Stats Section */}
+        {/* Stats */}
         <View style={styles.statsSection}>
           <View style={styles.statsCard}>
             <Text style={styles.statsNumber}>1,234</Text>
@@ -152,55 +169,61 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             <Text style={styles.statsLabel}>Cities</Text>
           </View>
         </View>
+
+        {/* Bottom Spacing for Tab Bar */}
+        <View style={styles.bottomSpacing} />
       </ScrollView>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#f8f9fa'
   },
   header: {
     paddingTop: 50,
     paddingBottom: 20,
-    paddingHorizontal: 20,
+    paddingHorizontal: 20
   },
   headerContent: {
-    alignItems: 'center',
+    alignItems: 'center'
   },
   headerTitle: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#fff',
-    marginBottom: 4,
+    marginBottom: 4
   },
   headerSubtitle: {
     fontSize: 14,
     color: '#fff',
-    opacity: 0.9,
+    opacity: 0.9
   },
-  content: {
-    flex: 1,
+  scrollView: {
+    flex: 1
+  },
+  scrollContent: {
+    paddingBottom: 120 // Extra padding for bottom tab bar
   },
   heroSection: {
     paddingHorizontal: 20,
-    paddingVertical: 20,
+    paddingVertical: 20
   },
   heroCard: {
     borderRadius: 16,
-    padding: 20,
+    padding: 20
   },
   heroContent: {
-    alignItems: 'center',
+    alignItems: 'center'
   },
   heroTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#fff',
     marginBottom: 8,
-    textAlign: 'center',
+    textAlign: 'center'
   },
   heroSubtitle: {
     fontSize: 14,
@@ -208,45 +231,48 @@ const styles = StyleSheet.create({
     opacity: 0.9,
     textAlign: 'center',
     marginBottom: 20,
-    lineHeight: 20,
+    lineHeight: 20
   },
   heroButton: {
     backgroundColor: 'rgba(255,255,255,0.2)',
     paddingHorizontal: 20,
     paddingVertical: 10,
-    borderRadius: 20,
+    borderRadius: 20
   },
   heroButtonText: {
     color: '#fff',
     fontWeight: '600',
-    fontSize: 14,
+    fontSize: 14
   },
   section: {
-    marginBottom: 30,
+    marginBottom: 30
   },
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    marginBottom: 15,
+    marginBottom: 15
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#333'
   },
   seeAllText: {
     fontSize: 14,
     color: '#007AFF',
-    fontWeight: '600',
+    fontWeight: '600'
   },
-  categoriesList: {
+  categoriesContainer: {
+    flexDirection: 'row',
     paddingHorizontal: 20,
+    flexWrap: 'wrap'
   },
   categoryItem: {
     alignItems: 'center',
     marginRight: 20,
+    marginBottom: 10,
     backgroundColor: '#fff',
     padding: 15,
     borderRadius: 12,
@@ -254,28 +280,28 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 2
     },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 2,
+    elevation: 2
   },
   categoryIcon: {
     fontSize: 24,
-    marginBottom: 8,
+    marginBottom: 8
   },
   categoryName: {
     fontSize: 12,
     fontWeight: '600',
     color: '#333',
-    marginBottom: 4,
+    marginBottom: 4
   },
   categoryCount: {
     fontSize: 10,
-    color: '#666',
+    color: '#666'
   },
-  productsList: {
-    paddingHorizontal: 20,
+  productsContainer: {
+    paddingHorizontal: 20
   },
   statsSection: {
     flexDirection: 'row',
@@ -289,25 +315,28 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 2
     },
     shadowOpacity: 0.1,
     shadowRadius: 8,
-    elevation: 4,
+    elevation: 4
   },
   statsCard: {
-    alignItems: 'center',
+    alignItems: 'center'
   },
   statsNumber: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#007AFF',
-    marginBottom: 4,
+    marginBottom: 4
   },
   statsLabel: {
     fontSize: 12,
-    color: '#666',
+    color: '#666'
   },
-});
+  bottomSpacing: {
+    height: 20
+  }
+})
 
-export default HomeScreen; 
+export default HomeScreen
