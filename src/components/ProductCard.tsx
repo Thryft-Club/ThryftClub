@@ -15,10 +15,17 @@ interface ProductCardProps {
   id: string
   title: string
   price: number
+  originalPrice?: number
   image: string
   category: string
   condition: string
   location: string
+  description?: string
+  seller?: {
+    name: string
+    avatar: string
+    rating: number
+  }
   onPress: () => void
   isFavorite?: boolean
   onFavoritePress?: () => void
@@ -27,10 +34,13 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({
   title,
   price,
+  originalPrice,
   image,
   category,
   condition,
   location,
+  description,
+  seller,
   onPress,
   isFavorite = false,
   onFavoritePress
@@ -65,9 +75,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
         <View style={styles.priceContainer}>
           <Text style={styles.price}>${price.toLocaleString()}</Text>
-          <Text style={styles.originalPrice}>
-            ${(price * 1.2).toLocaleString()}
-          </Text>
+          {originalPrice && (
+            <Text style={styles.originalPrice}>
+              ${originalPrice.toLocaleString()}
+            </Text>
+          )}
         </View>
 
         <View style={styles.metaContainer}>
@@ -79,6 +91,20 @@ const ProductCard: React.FC<ProductCardProps> = ({
             <Text style={styles.locationText}>📍 {location}</Text>
           </View>
         </View>
+
+        {/* Seller Info */}
+        {seller && (
+          <View style={styles.sellerContainer}>
+            <Image
+              source={{ uri: seller.avatar }}
+              style={styles.sellerAvatar}
+            />
+            <View style={styles.sellerInfo}>
+              <Text style={styles.sellerName}>{seller.name}</Text>
+              <Text style={styles.sellerRating}>⭐ {seller.rating}</Text>
+            </View>
+          </View>
+        )}
       </View>
     </TouchableOpacity>
   )
@@ -177,7 +203,8 @@ const styles = StyleSheet.create({
   metaContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 8
   },
   categoryContainer: {
     flexDirection: 'row',
@@ -193,6 +220,31 @@ const styles = StyleSheet.create({
   },
   locationText: {
     fontSize: 12,
+    color: '#6c757d'
+  },
+  sellerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: '#f0f0f0'
+  },
+  sellerAvatar: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    marginRight: 8
+  },
+  sellerInfo: {
+    flex: 1
+  },
+  sellerName: {
+    fontSize: 12,
+    color: '#6c757d',
+    fontWeight: '500'
+  },
+  sellerRating: {
+    fontSize: 10,
     color: '#6c757d'
   }
 })

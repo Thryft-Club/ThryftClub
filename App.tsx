@@ -1,69 +1,54 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, StatusBar } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import HomeScreen from './src/screens/HomeScreen';
-import BottomTabBar from './src/components/BottomTabBar';
+import React, { useState } from 'react'
+import { View, StyleSheet, StatusBar } from 'react-native'
+import HomeScreen from './src/screens/HomeScreen'
+import SearchScreen from './src/screens/SearchScreen'
+import SellScreen from './src/screens/SellScreen'
+import ChatScreen from './src/screens/ChatScreen'
+import ProfileScreen from './src/screens/ProfileScreen'
+import BottomTabBar from './src/components/BottomTabBar'
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('Home');
+  const [activeTab, setActiveTab] = useState('Home')
 
   const handleTabPress = (tabName: string) => {
-    setActiveTab(tabName);
-  };
+    console.log('Tab pressed:', tabName)
+    setActiveTab(tabName)
+  }
 
   const renderScreen = () => {
+    console.log('Rendering screen for tab:', activeTab)
+
     switch (activeTab) {
       case 'Home':
-        return <HomeScreen />;
+        return <HomeScreen />
       case 'Search':
-        return (
-          <View style={styles.screen}>
-            {/* TODO: Implement Search Screen */}
-          </View>
-        );
+        return <SearchScreen />
       case 'Sell':
-        return (
-          <View style={styles.screen}>
-            {/* TODO: Implement Sell Screen */}
-          </View>
-        );
+        return <SellScreen />
       case 'Chat':
-        return (
-          <View style={styles.screen}>
-            {/* TODO: Implement Chat Screen */}
-          </View>
-        );
+        return <ChatScreen />
       case 'Profile':
-        return (
-          <View style={styles.screen}>
-            {/* TODO: Implement Profile Screen */}
-          </View>
-        );
+        return <ProfileScreen />
       default:
-        return <HomeScreen />;
+        return <HomeScreen />
     }
-  };
+  }
 
   return (
-    <SafeAreaProvider>
+    <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#007AFF" />
-      <View style={styles.container}>
-        {renderScreen()}
-        <BottomTabBar activeTab={activeTab} onTabPress={handleTabPress} />
-      </View>
-    </SafeAreaProvider>
-  );
+      <View style={styles.screenContainer}>{renderScreen()}</View>
+      <BottomTabBar activeTab={activeTab} onTabPress={handleTabPress} />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#f8f9fa'
   },
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f8f9fa',
-  },
-});
+  screenContainer: {
+    flex: 1
+  }
+})

@@ -1,177 +1,117 @@
-import React, { useState } from 'react';
+import React from 'react'
 import {
   View,
   Text,
-  ScrollView,
   StyleSheet,
   TouchableOpacity,
   FlatList,
   Dimensions,
-} from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import Header from '../components/Header';
-import ProductCard from '../components/ProductCard';
+  ScrollView
+} from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient'
+import ProductCard from '../components/ProductCard'
+import { mockProducts, mockCategories } from '../services/mockData'
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get('window')
 
-interface Category {
-  id: string;
-  name: string;
-  icon: string;
-  color: string;
+interface HomeScreenProps {
+  navigation?: any
 }
 
-interface Product {
-  id: string;
-  title: string;
-  price: number;
-  image: string;
-  category: string;
-  condition: string;
-  location: string;
-}
-
-const categories: Category[] = [
-  { id: '1', name: 'Electronics', icon: '📱', color: '#007AFF' },
-  { id: '2', name: 'Fashion', icon: '👕', color: '#FF3B30' },
-  { id: '3', name: 'Home', icon: '🏠', color: '#34C759' },
-  { id: '4', name: 'Sports', icon: '⚽', color: '#FF9500' },
-  { id: '5', name: 'Books', icon: '📚', color: '#AF52DE' },
-  { id: '6', name: 'Vehicles', icon: '🚗', color: '#5856D6' },
-];
-
-const mockProducts: Product[] = [
-  {
-    id: '1',
-    title: 'iPhone 13 Pro - Excellent Condition',
-    price: 799,
-    image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400',
-    category: 'Electronics',
-    condition: 'Excellent',
-    location: 'New York, NY',
-  },
-  {
-    id: '2',
-    title: 'MacBook Air M1 - Like New',
-    price: 899,
-    image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400',
-    category: 'Electronics',
-    condition: 'Like New',
-    location: 'Los Angeles, CA',
-  },
-  {
-    id: '3',
-    title: 'Nike Air Max 270 - Size 10',
-    price: 89,
-    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400',
-    category: 'Fashion',
-    condition: 'Good',
-    location: 'Chicago, IL',
-  },
-  {
-    id: '4',
-    title: 'Samsung 55" 4K Smart TV',
-    price: 499,
-    image: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400',
-    category: 'Electronics',
-    condition: 'Very Good',
-    location: 'Miami, FL',
-  },
-];
-
-const HomeScreen: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState<string>('all');
+const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
+  const handleCategoryPress = (category: string) => {
+    console.log('Category pressed:', category)
+    // TODO: Navigate to category page
+  }
 
   const handleProductPress = (productId: string) => {
-    console.log('Product pressed:', productId);
-  };
+    console.log('Product pressed:', productId)
+    // TODO: Navigate to product detail
+  }
 
   const handleFavoritePress = (productId: string) => {
-    console.log('Favorite pressed:', productId);
-  };
+    console.log('Favorite pressed:', productId)
+    // TODO: Toggle favorite
+  }
 
-  const handleCategoryPress = (categoryId: string) => {
-    setActiveCategory(categoryId);
-  };
+  const handleExplorePress = () => {
+    console.log('Explore pressed')
+    // TODO: Navigate to explore page
+  }
 
-  const renderCategory = ({ item }: { item: Category }) => (
+  const renderCategoryItem = ({ item }: { item: any }) => (
     <TouchableOpacity
-      style={[
-        styles.categoryItem,
-        activeCategory === item.id && styles.activeCategoryItem,
-      ]}
-      onPress={() => handleCategoryPress(item.id)}
+      style={styles.categoryItem}
+      onPress={() => handleCategoryPress(item.name)}
     >
-      <View
-        style={[
-          styles.categoryIcon,
-          { backgroundColor: item.color },
-          activeCategory === item.id && styles.activeCategoryIcon,
-        ]}
-      >
-        <Text style={styles.categoryIconText}>{item.icon}</Text>
-      </View>
-      <Text
-        style={[
-          styles.categoryText,
-          activeCategory === item.id && styles.activeCategoryText,
-        ]}
-      >
-        {item.name}
-      </Text>
+      <Text style={styles.categoryIcon}>{item.icon}</Text>
+      <Text style={styles.categoryName}>{item.name}</Text>
+      <Text style={styles.categoryCount}>{item.count} items</Text>
     </TouchableOpacity>
-  );
+  )
 
-  const renderProduct = ({ item }: { item: Product }) => (
+  const renderProductItem = ({ item }: { item: any }) => (
     <ProductCard
-      id={item.id}
-      title={item.title}
-      price={item.price}
-      image={item.image}
-      category={item.category}
-      condition={item.condition}
-      location={item.location}
+      {...item}
       onPress={() => handleProductPress(item.id)}
       onFavoritePress={() => handleFavoritePress(item.id)}
     />
-  );
+  )
 
   return (
     <View style={styles.container}>
-      <Header
-        onSearchPress={() => console.log('Search pressed')}
-        onNotificationPress={() => console.log('Notifications pressed')}
-      />
-      
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+      {/* Header */}
+      <LinearGradient colors={['#007AFF', '#0056CC']} style={styles.header}>
+        <View style={styles.headerContent}>
+          <Text style={styles.headerTitle}>🌱 Renewly Market</Text>
+          <Text style={styles.headerSubtitle}>Sustainable marketplace</Text>
+        </View>
+      </LinearGradient>
+
+      {/* Scrollable Content */}
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
         {/* Hero Section */}
         <View style={styles.heroSection}>
           <LinearGradient
-            colors={['#007AFF', '#0056CC']}
-            style={styles.heroGradient}
+            colors={['#28a745', '#20c997']}
+            style={styles.heroCard}
           >
-            <Text style={styles.heroTitle}>Discover Amazing Deals</Text>
-            <Text style={styles.heroSubtitle}>
-              Find pre-loved items at great prices
-            </Text>
-            <TouchableOpacity style={styles.heroButton}>
-              <Text style={styles.heroButtonText}>Start Shopping</Text>
-              <Text style={styles.heroButtonIcon}>→</Text>
-            </TouchableOpacity>
+            <View style={styles.heroContent}>
+              <Text style={styles.heroTitle}>Save Money, Save Earth</Text>
+              <Text style={styles.heroSubtitle}>
+                Buy and sell quality second-hand items. Reduce waste, find great
+                deals.
+              </Text>
+              <TouchableOpacity
+                style={styles.heroButton}
+                onPress={handleExplorePress}
+              >
+                <Text style={styles.heroButtonText}>Explore Now →</Text>
+              </TouchableOpacity>
+            </View>
           </LinearGradient>
         </View>
 
         {/* Categories */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Categories</Text>
-          <FlatList
-            data={categories}
-            renderItem={renderCategory}
-            keyExtractor={(item) => item.id}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.categoriesContainer}
-          />
+          <Text style={styles.sectionTitle}>Browse Categories</Text>
+          <View style={styles.categoriesContainer}>
+            {mockCategories.map((category) => (
+              <TouchableOpacity
+                key={category.id}
+                style={styles.categoryItem}
+                onPress={() => handleCategoryPress(category.name)}
+              >
+                <Text style={styles.categoryIcon}>{category.icon}</Text>
+                <Text style={styles.categoryName}>{category.name}</Text>
+                <Text style={styles.categoryCount}>{category.count} items</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
         </View>
 
         {/* Featured Products */}
@@ -182,180 +122,221 @@ const HomeScreen: React.FC = () => {
               <Text style={styles.seeAllText}>See All</Text>
             </TouchableOpacity>
           </View>
-          
-          <FlatList
-            data={mockProducts}
-            renderItem={renderProduct}
-            keyExtractor={(item) => item.id}
-            showsVerticalScrollIndicator={false}
-            scrollEnabled={false}
-          />
+          <View style={styles.productsContainer}>
+            {mockProducts.slice(0, 4).map((product) => (
+              <ProductCard
+                key={product.id}
+                {...product}
+                onPress={() => handleProductPress(product.id)}
+                onFavoritePress={() => handleFavoritePress(product.id)}
+              />
+            ))}
+          </View>
         </View>
 
-        {/* Stats Section */}
-        <View style={styles.statsSection}>
-          <View style={styles.statItem}>
-            <Text style={styles.statNumber}>10K+</Text>
-            <Text style={styles.statLabel}>Active Users</Text>
+        {/* Recent Listings */}
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Recent Listings</Text>
+            <TouchableOpacity>
+              <Text style={styles.seeAllText}>See All</Text>
+            </TouchableOpacity>
           </View>
-          <View style={styles.statItem}>
-            <Text style={styles.statNumber}>50K+</Text>
-            <Text style={styles.statLabel}>Products Listed</Text>
-          </View>
-          <View style={styles.statItem}>
-            <Text style={styles.statNumber}>95%</Text>
-            <Text style={styles.statLabel}>Satisfaction</Text>
+          <View style={styles.productsContainer}>
+            {mockProducts.slice(4, 8).map((product) => (
+              <ProductCard
+                key={product.id}
+                {...product}
+                onPress={() => handleProductPress(product.id)}
+                onFavoritePress={() => handleFavoritePress(product.id)}
+              />
+            ))}
           </View>
         </View>
+
+        {/* Stats */}
+        <View style={styles.statsSection}>
+          <View style={styles.statsCard}>
+            <Text style={styles.statsNumber}>1,234</Text>
+            <Text style={styles.statsLabel}>Items Listed</Text>
+          </View>
+          <View style={styles.statsCard}>
+            <Text style={styles.statsNumber}>567</Text>
+            <Text style={styles.statsLabel}>Happy Buyers</Text>
+          </View>
+          <View style={styles.statsCard}>
+            <Text style={styles.statsNumber}>89</Text>
+            <Text style={styles.statsLabel}>Cities</Text>
+          </View>
+        </View>
+
+        {/* Bottom Spacing for Tab Bar */}
+        <View style={styles.bottomSpacing} />
       </ScrollView>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#f8f9fa'
   },
-  content: {
-    flex: 1,
+  header: {
+    paddingTop: 50,
+    paddingBottom: 20,
+    paddingHorizontal: 20
+  },
+  headerContent: {
+    alignItems: 'center'
+  },
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 4
+  },
+  headerSubtitle: {
+    fontSize: 14,
+    color: '#fff',
+    opacity: 0.9
+  },
+  scrollView: {
+    flex: 1
+  },
+  scrollContent: {
+    paddingBottom: 120 // Extra padding for bottom tab bar
   },
   heroSection: {
-    margin: 16,
-    borderRadius: 16,
-    overflow: 'hidden',
+    paddingHorizontal: 20,
+    paddingVertical: 20
   },
-  heroGradient: {
-    padding: 24,
-    alignItems: 'center',
+  heroCard: {
+    borderRadius: 16,
+    padding: 20
+  },
+  heroContent: {
+    alignItems: 'center'
   },
   heroTitle: {
-    fontSize: 24,
-    fontWeight: '700',
+    fontSize: 20,
+    fontWeight: 'bold',
     color: '#fff',
-    textAlign: 'center',
     marginBottom: 8,
+    textAlign: 'center'
   },
   heroSubtitle: {
-    fontSize: 16,
-    color: 'rgba(255,255,255,0.8)',
+    fontSize: 14,
+    color: '#fff',
+    opacity: 0.9,
     textAlign: 'center',
     marginBottom: 20,
+    lineHeight: 20
   },
   heroButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
     backgroundColor: 'rgba(255,255,255,0.2)',
     paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 25,
+    paddingVertical: 10,
+    borderRadius: 20
   },
   heroButtonText: {
     color: '#fff',
-    fontSize: 16,
     fontWeight: '600',
-    marginRight: 8,
-  },
-  heroButtonIcon: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 14
   },
   section: {
-    marginBottom: 24,
+    marginBottom: 30
   },
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    marginBottom: 16,
+    paddingHorizontal: 20,
+    marginBottom: 15
   },
   sectionTitle: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: '#2c3e50',
-    paddingHorizontal: 16,
-    marginBottom: 16,
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333'
   },
   seeAllText: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#007AFF',
-    fontWeight: '600',
+    fontWeight: '600'
   },
   categoriesContainer: {
-    paddingHorizontal: 16,
+    flexDirection: 'row',
+    paddingHorizontal: 20,
+    flexWrap: 'wrap'
   },
   categoryItem: {
     alignItems: 'center',
     marginRight: 20,
-    width: 80,
-  },
-  activeCategoryItem: {
-    transform: [{ scale: 1.05 }],
-  },
-  categoryIcon: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  categoryIconText: {
-    fontSize: 24,
-    color: '#fff',
-  },
-  activeCategoryIcon: {
+    marginBottom: 10,
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 12,
+    minWidth: 80,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: 2
     },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 8,
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2
   },
-  categoryText: {
+  categoryIcon: {
+    fontSize: 24,
+    marginBottom: 8
+  },
+  categoryName: {
     fontSize: 12,
-    fontWeight: '500',
-    color: '#6c757d',
-    textAlign: 'center',
-  },
-  activeCategoryText: {
-    color: '#007AFF',
     fontWeight: '600',
+    color: '#333',
+    marginBottom: 4
+  },
+  categoryCount: {
+    fontSize: 10,
+    color: '#666'
+  },
+  productsContainer: {
+    paddingHorizontal: 20
   },
   statsSection: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+    paddingHorizontal: 20,
+    paddingVertical: 20,
     backgroundColor: '#fff',
-    margin: 16,
-    padding: 20,
+    marginHorizontal: 20,
+    marginBottom: 20,
     borderRadius: 16,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 2
     },
     shadowOpacity: 0.1,
     shadowRadius: 8,
-    elevation: 4,
+    elevation: 4
   },
-  statItem: {
-    alignItems: 'center',
+  statsCard: {
+    alignItems: 'center'
   },
-  statNumber: {
-    fontSize: 24,
-    fontWeight: '700',
+  statsNumber: {
+    fontSize: 20,
+    fontWeight: 'bold',
     color: '#007AFF',
-    marginBottom: 4,
+    marginBottom: 4
   },
-  statLabel: {
+  statsLabel: {
     fontSize: 12,
-    color: '#6c757d',
-    textAlign: 'center',
+    color: '#666'
   },
-});
+  bottomSpacing: {
+    height: 20
+  }
+})
 
-export default HomeScreen; 
+export default HomeScreen
