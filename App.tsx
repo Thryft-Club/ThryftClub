@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { View, StyleSheet, StatusBar } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import HomeScreen from './src/screens/HomeScreen';
+import SearchScreen from './src/screens/SearchScreen';
+import SellScreen from './src/screens/SellScreen';
+import ChatScreen from './src/screens/ChatScreen';
+import ProfileScreen from './src/screens/ProfileScreen';
 import BottomTabBar from './src/components/BottomTabBar';
 
 export default function App() {
@@ -16,29 +20,13 @@ export default function App() {
       case 'Home':
         return <HomeScreen />;
       case 'Search':
-        return (
-          <View style={styles.screen}>
-            {/* TODO: Implement Search Screen */}
-          </View>
-        );
+        return <SearchScreen />;
       case 'Sell':
-        return (
-          <View style={styles.screen}>
-            {/* TODO: Implement Sell Screen */}
-          </View>
-        );
+        return <SellScreen />;
       case 'Chat':
-        return (
-          <View style={styles.screen}>
-            {/* TODO: Implement Chat Screen */}
-          </View>
-        );
+        return <ChatScreen />;
       case 'Profile':
-        return (
-          <View style={styles.screen}>
-            {/* TODO: Implement Profile Screen */}
-          </View>
-        );
+        return <ProfileScreen />;
       default:
         return <HomeScreen />;
     }
@@ -58,12 +46,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
-  },
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#f8f9fa',
   },
 });
