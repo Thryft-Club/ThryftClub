@@ -19,7 +19,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({
-  title = 'Renewly Market',
+  title = 'Thryft Club',
   showSearch = true,
   onSearchPress,
   onNotificationPress,
@@ -38,7 +38,7 @@ const Header: React.FC<HeaderProps> = ({
           ) : (
             <View style={styles.logoContainer}>
               <Text style={styles.logoIcon}>🌱</Text>
-              <Text style={styles.logoText}>Renewly</Text>
+              <Text style={styles.logoText}>Thryft</Text>
             </View>
           )}
 

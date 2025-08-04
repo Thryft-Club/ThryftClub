@@ -174,7 +174,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
 
       {/* App Info */}
       <View style={styles.appInfo}>
-        <Text style={styles.appVersion}>Renewly Market v1.0.0</Text>
+                      <Text style={styles.appVersion}>Thryft Club v1.0.0</Text>
         <Text style={styles.appDescription}>
           Sustainable marketplace for buying and selling
         </Text>

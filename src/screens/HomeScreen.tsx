@@ -63,7 +63,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
       {/* Header */}
       <LinearGradient colors={['#007AFF', '#0056CC']} style={styles.header}>
         <View style={styles.headerContent}>
-          <Text style={styles.headerTitle}>🌱 Renewly Market</Text>
+          <Text style={styles.headerTitle}>🌱 Thryft Club</Text>
           <Text style={styles.headerSubtitle}>Sustainable marketplace</Text>
         </View>
       </LinearGradient>

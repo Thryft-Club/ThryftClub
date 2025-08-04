@@ -1,6 +1,6 @@
-# 🌱 RenewlyMarketApp
+# 🌱 Thryft Club
 
-A sustainable marketplace mobile application built with React Native and Expo, designed to promote second-hand buying and selling while reducing environmental waste.
+A thrift and sustainable marketplace mobile application built with React Native and Expo, designed to promote second-hand buying and selling while reducing environmental waste.
 
 ## 📱 Features
 
@@ -94,7 +94,7 @@ Before running this application, make sure you have the following installed:
 
 ```bash
 git clone <repository-url>
-cd RenewlyMarketApp
+cd thryftclub
 ```
 
 ### 2. Install Dependencies
@@ -303,7 +303,7 @@ expo export --platform web
 
 ### App Configuration (`app.json`)
 
-- **App Name**: RenewlyMarketApp
+- **App Name**: Thryft Club
 - **Version**: 1.0.0
 - **Orientation**: Portrait
 - **Platforms**: iOS, Android, Web
@@ -324,7 +324,7 @@ Key dependencies include:
 ## 📁 Project Structure
 
 ```
-RenewlyMarketApp/
+thryftclub/
 ├── assets/                 # App icons and images
 ├── src/
 │   ├── components/         # Reusable UI components
