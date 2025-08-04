@@ -48,6 +48,12 @@ const tabs: TabItem[] = [
     label: 'Chat'
   },
   {
+    name: 'Rewards',
+    icon: '🏆',
+    activeIcon: '🏆',
+    label: 'Rewards'
+  },
+  {
     name: 'Profile',
     icon: '👤',
     activeIcon: '👤',
