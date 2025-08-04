@@ -267,16 +267,16 @@ const styles = StyleSheet.create({
   categoriesContainer: {
     flexDirection: 'row',
     paddingHorizontal: 20,
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    justifyContent: 'space-between'
   },
   categoryItem: {
     alignItems: 'center',
-    marginRight: 20,
-    marginBottom: 10,
+    marginBottom: 15,
     backgroundColor: '#fff',
-    padding: 15,
-    borderRadius: 12,
-    minWidth: 80,
+    padding: 20,
+    borderRadius: 16,
+    width: (width - 60) / 3, // 3 items per row with margins
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -287,18 +287,20 @@ const styles = StyleSheet.create({
     elevation: 2
   },
   categoryIcon: {
-    fontSize: 24,
-    marginBottom: 8
+    fontSize: 32,
+    marginBottom: 12
   },
   categoryName: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '600',
     color: '#333',
-    marginBottom: 4
+    marginBottom: 6,
+    textAlign: 'center'
   },
   categoryCount: {
-    fontSize: 10,
-    color: '#666'
+    fontSize: 12,
+    color: '#666',
+    textAlign: 'center'
   },
   productsContainer: {
     paddingHorizontal: 20

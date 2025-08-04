@@ -1,53 +1,53 @@
 export interface Product {
-  id: string;
-  title: string;
-  price: number;
-  originalPrice?: number;
-  image: string;
-  category: string;
-  condition: string;
-  location: string;
-  description?: string;
+  id: string
+  title: string
+  price: number
+  originalPrice?: number
+  image: string
+  category: string
+  condition: string
+  location: string
+  description?: string
   seller: {
-    name: string;
-    avatar: string;
-    rating: number;
-  };
-  images?: string[];
-  createdAt: string;
-  isFavorite?: boolean;
+    name: string
+    avatar: string
+    rating: number
+  }
+  images?: string[]
+  createdAt: string
+  isFavorite?: boolean
 }
 
 export interface ChatItem {
-  id: string;
-  name: string;
-  lastMessage: string;
-  timestamp: string;
-  unreadCount: number;
-  avatar: string;
-  isOnline: boolean;
-  productId?: string;
-  productTitle?: string;
-  productImage?: string;
+  id: string
+  name: string
+  lastMessage: string
+  timestamp: string
+  unreadCount: number
+  avatar: string
+  isOnline: boolean
+  productId?: string
+  productTitle?: string
+  productImage?: string
 }
 
 export interface Category {
-  id: string;
-  name: string;
-  icon: string;
-  count: number;
+  id: string
+  name: string
+  icon: string
+  count: number
 }
 
 export interface UserProfile {
-  name: string;
-  email: string;
-  avatar: string;
-  location: string;
-  memberSince: string;
-  rating: number;
-  totalSales: number;
-  totalPurchases: number;
-  bio?: string;
+  name: string
+  email: string
+  avatar: string
+  location: string
+  memberSince: string
+  rating: number
+  totalSales: number
+  totalPurchases: number
+  bio?: string
 }
 
 export const mockProducts: Product[] = [
@@ -60,18 +60,20 @@ export const mockProducts: Product[] = [
     category: 'Electronics',
     condition: 'Excellent',
     location: 'New York, NY',
-    description: 'iPhone 13 Pro in excellent condition. 256GB storage, Pacific Blue. Includes original box and charger. No scratches or damage.',
+    description:
+      'iPhone 13 Pro in excellent condition. 256GB storage, Pacific Blue. Includes original box and charger. No scratches or damage.',
     seller: {
       name: 'John Smith',
-      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100',
-      rating: 4.8,
+      avatar:
+        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100',
+      rating: 4.8
     },
     images: [
       'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400',
-      'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400',
+      'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400'
     ],
     createdAt: '2024-01-15',
-    isFavorite: true,
+    isFavorite: true
   },
   {
     id: '2',
@@ -82,14 +84,16 @@ export const mockProducts: Product[] = [
     category: 'Clothing',
     condition: 'Like New',
     location: 'Los Angeles, CA',
-    description: 'Nike Air Max 270 in like new condition. Size 10, Black/White colorway. Worn only a few times.',
+    description:
+      'Nike Air Max 270 in like new condition. Size 10, Black/White colorway. Worn only a few times.',
     seller: {
       name: 'Sarah Johnson',
-      avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100',
-      rating: 4.9,
+      avatar:
+        'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100',
+      rating: 4.9
     },
     createdAt: '2024-01-20',
-    isFavorite: false,
+    isFavorite: false
   },
   {
     id: '3',
@@ -100,14 +104,16 @@ export const mockProducts: Product[] = [
     category: 'Electronics',
     condition: 'Good',
     location: 'Chicago, IL',
-    description: 'MacBook Air M1 in good condition. 8GB RAM, 256GB SSD. Minor cosmetic wear but functions perfectly.',
+    description:
+      'MacBook Air M1 in good condition. 8GB RAM, 256GB SSD. Minor cosmetic wear but functions perfectly.',
     seller: {
       name: 'Mike Wilson',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100',
-      rating: 4.7,
+      avatar:
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100',
+      rating: 4.7
     },
     createdAt: '2024-01-18',
-    isFavorite: true,
+    isFavorite: true
   },
   {
     id: '4',
@@ -118,32 +124,36 @@ export const mockProducts: Product[] = [
     category: 'Electronics',
     condition: 'Excellent',
     location: 'Miami, FL',
-    description: 'Sony WH-1000XM4 noise-canceling headphones. Excellent condition, includes original case and cables.',
+    description:
+      'Sony WH-1000XM4 noise-canceling headphones. Excellent condition, includes original case and cables.',
     seller: {
       name: 'Emily Davis',
-      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100',
-      rating: 4.6,
+      avatar:
+        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100',
+      rating: 4.6
     },
     createdAt: '2024-01-22',
-    isFavorite: false,
+    isFavorite: false
   },
   {
     id: '5',
-    title: 'Levi\'s 501 Jeans - New',
+    title: "Levi's 501 Jeans - New",
     price: 45,
     originalPrice: 70,
     image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=400',
     category: 'Clothing',
     condition: 'New',
     location: 'Austin, TX',
-    description: 'Levi\'s 501 jeans, brand new with tags. Size 32x32, Dark Blue wash.',
+    description:
+      "Levi's 501 jeans, brand new with tags. Size 32x32, Dark Blue wash.",
     seller: {
       name: 'David Chen',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100',
-      rating: 4.5,
+      avatar:
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100',
+      rating: 4.5
     },
     createdAt: '2024-01-25',
-    isFavorite: false,
+    isFavorite: false
   },
   {
     id: '6',
@@ -154,14 +164,16 @@ export const mockProducts: Product[] = [
     category: 'Home & Garden',
     condition: 'Good',
     location: 'Seattle, WA',
-    description: 'IKEA KALLAX shelf unit in good condition. 4x4 configuration, white finish. Some minor wear.',
+    description:
+      'IKEA KALLAX shelf unit in good condition. 4x4 configuration, white finish. Some minor wear.',
     seller: {
       name: 'Lisa Thompson',
-      avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100',
-      rating: 4.4,
+      avatar:
+        'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100',
+      rating: 4.4
     },
     createdAt: '2024-01-23',
-    isFavorite: true,
+    isFavorite: true
   },
   {
     id: '7',
@@ -172,14 +184,16 @@ export const mockProducts: Product[] = [
     category: 'Electronics',
     condition: 'Like New',
     location: 'Denver, CO',
-    description: 'Nintendo Switch OLED in like new condition. Includes dock, joy-cons, and original box.',
+    description:
+      'Nintendo Switch OLED in like new condition. Includes dock, joy-cons, and original box.',
     seller: {
       name: 'Alex Rodriguez',
-      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100',
-      rating: 4.8,
+      avatar:
+        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100',
+      rating: 4.8
     },
     createdAt: '2024-01-24',
-    isFavorite: false,
+    isFavorite: false
   },
   {
     id: '8',
@@ -190,16 +204,18 @@ export const mockProducts: Product[] = [
     category: 'Clothing',
     condition: 'Good',
     location: 'Portland, OR',
-    description: 'Adidas Ultraboost 21 running shoes. Size 9, good condition with some wear on soles.',
+    description:
+      'Adidas Ultraboost 21 running shoes. Size 9, good condition with some wear on soles.',
     seller: {
       name: 'Maria Garcia',
-      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100',
-      rating: 4.3,
+      avatar:
+        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100',
+      rating: 4.3
     },
     createdAt: '2024-01-26',
-    isFavorite: false,
-  },
-];
+    isFavorite: false
+  }
+]
 
 export const mockCategories: Category[] = [
   { id: '1', name: 'Electronics', icon: '📱', count: 156 },
@@ -207,8 +223,8 @@ export const mockCategories: Category[] = [
   { id: '3', name: 'Home & Garden', icon: '🏠', count: 89 },
   { id: '4', name: 'Sports', icon: '⚽', count: 67 },
   { id: '5', name: 'Books', icon: '📚', count: 123 },
-  { id: '6', name: 'Vehicles', icon: '🚗', count: 45 },
-];
+  { id: '6', name: 'Vehicles', icon: '🚗', count: 45 }
+]
 
 export const mockChats: ChatItem[] = [
   {
@@ -217,11 +233,13 @@ export const mockChats: ChatItem[] = [
     lastMessage: 'Is the iPhone still available?',
     timestamp: '2 min ago',
     unreadCount: 2,
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100',
+    avatar:
+      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100',
     isOnline: true,
     productId: '1',
     productTitle: 'iPhone 13 Pro - Excellent Condition',
-    productImage: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=100',
+    productImage:
+      'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=100'
   },
   {
     id: '2',
@@ -229,23 +247,27 @@ export const mockChats: ChatItem[] = [
     lastMessage: 'I can pick it up tomorrow',
     timestamp: '1 hour ago',
     unreadCount: 0,
-    avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100',
+    avatar:
+      'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100',
     isOnline: false,
     productId: '2',
     productTitle: 'Nike Air Max 270 - Like New',
-    productImage: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=100',
+    productImage:
+      'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=100'
   },
   {
     id: '3',
     name: 'Mike Wilson',
-    lastMessage: 'What\'s the best price you can do?',
+    lastMessage: "What's the best price you can do?",
     timestamp: '3 hours ago',
     unreadCount: 1,
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100',
+    avatar:
+      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100',
     isOnline: true,
     productId: '3',
     productTitle: 'MacBook Air M1 - Good Condition',
-    productImage: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=100',
+    productImage:
+      'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=100'
   },
   {
     id: '4',
@@ -253,13 +275,15 @@ export const mockChats: ChatItem[] = [
     lastMessage: 'Thanks for the quick response!',
     timestamp: '1 day ago',
     unreadCount: 0,
-    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100',
+    avatar:
+      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100',
     isOnline: false,
     productId: '4',
     productTitle: 'Sony WH-1000XM4 Headphones',
-    productImage: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100',
-  },
-];
+    productImage:
+      'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100'
+  }
+]
 
 export const mockUserProfile: UserProfile = {
   name: 'John Doe',
@@ -270,14 +294,16 @@ export const mockUserProfile: UserProfile = {
   rating: 4.8,
   totalSales: 24,
   totalPurchases: 12,
-  bio: 'Sustainable living enthusiast. Always looking for quality second-hand items.',
-};
+  bio: 'Sustainable living enthusiast. Always looking for quality second-hand items.'
+}
 
-export const mockSearchResults = mockProducts;
+export const mockSearchResults = mockProducts
 
-export const mockUserListings = mockProducts.filter((_, index) => index < 3);
+export const mockUserListings = mockProducts.filter((_, index) => index < 3)
 
-export const mockFavorites = mockProducts.filter(product => product.isFavorite);
+export const mockFavorites = mockProducts.filter(
+  (product) => product.isFavorite
+)
 
 export const mockTransactionHistory = [
   {
@@ -286,7 +312,7 @@ export const mockTransactionHistory = [
     productTitle: 'iPhone 13 Pro',
     amount: 899,
     date: '2024-01-15',
-    status: 'completed',
+    status: 'completed'
   },
   {
     id: '2',
@@ -294,7 +320,7 @@ export const mockTransactionHistory = [
     productTitle: 'Nike Air Max 270',
     amount: 120,
     date: '2024-01-10',
-    status: 'completed',
+    status: 'completed'
   },
   {
     id: '3',
@@ -302,22 +328,160 @@ export const mockTransactionHistory = [
     productTitle: 'MacBook Air M1',
     amount: 750,
     date: '2024-01-08',
-    status: 'completed',
+    status: 'completed'
+  }
+]
+
+// Rewards and Verification Data
+export interface Reward {
+  id: string
+  title: string
+  description: string
+  points: number
+  icon: string
+  type: 'transaction' | 'verification' | 'achievement' | 'referral'
+  isCompleted: boolean
+  progress?: number
+  maxProgress?: number
+}
+
+export interface NFT {
+  id: string
+  name: string
+  image: string
+  rarity: 'common' | 'rare' | 'epic' | 'legendary'
+  description: string
+  earnedDate: string
+}
+
+export interface VerificationTask {
+  id: string
+  productTitle: string
+  sellerName: string
+  location: string
+  distance: string
+  reward: number
+  status: 'pending' | 'in-progress' | 'completed'
+  deadline: string
+}
+
+export const mockRewards: Reward[] = [
+  {
+    id: '1',
+    title: 'First Sale',
+    description: 'Complete your first product sale',
+    points: 100,
+    icon: 'bag-outline',
+    type: 'transaction',
+    isCompleted: true
   },
-];
+  {
+    id: '2',
+    title: 'Honest Seller',
+    description: 'Maintain 5-star rating for 10 sales',
+    points: 250,
+    icon: 'star-outline',
+    type: 'achievement',
+    isCompleted: true
+  },
+  {
+    id: '3',
+    title: 'Local Verifier',
+    description: 'Complete 5 product verifications',
+    points: 500,
+    icon: 'checkmark-circle-outline',
+    type: 'verification',
+    isCompleted: false,
+    progress: 3,
+    maxProgress: 5
+  },
+  {
+    id: '4',
+    title: 'Community Helper',
+    description: 'Verify 20 products in your area',
+    points: 1000,
+    icon: 'people-outline',
+    type: 'verification',
+    isCompleted: false,
+    progress: 12,
+    maxProgress: 20
+  },
+  {
+    id: '5',
+    title: 'Referral Master',
+    description: 'Invite 10 friends to the platform',
+    points: 300,
+    icon: 'share-outline',
+    type: 'referral',
+    isCompleted: false,
+    progress: 7,
+    maxProgress: 10
+  }
+]
+
+export const mockNFTs: NFT[] = [
+  {
+    id: '1',
+    name: 'Eco Warrior',
+    image: '🌱',
+    rarity: 'rare',
+    description: 'Awarded for sustainable shopping practices',
+    earnedDate: '2024-01-15'
+  },
+  {
+    id: '2',
+    name: 'Trusted Verifier',
+    image: '✅',
+    rarity: 'epic',
+    description: 'Earned by completing 50 verifications',
+    earnedDate: '2024-01-20'
+  },
+  {
+    id: '3',
+    name: 'Marketplace Pioneer',
+    image: '🚀',
+    rarity: 'legendary',
+    description: 'Early adopter of the platform',
+    earnedDate: '2024-01-10'
+  }
+]
+
+export const mockVerificationTasks: VerificationTask[] = [
+  {
+    id: '1',
+    productTitle: 'iPhone 13 Pro - Excellent Condition',
+    sellerName: 'John Smith',
+    location: 'Downtown, 2.3km away',
+    distance: '2.3km',
+    reward: 50,
+    status: 'pending',
+    deadline: '2024-02-01'
+  },
+  {
+    id: '2',
+    productTitle: 'MacBook Air M1 - Good Condition',
+    sellerName: 'Sarah Johnson',
+    location: 'Westside, 1.8km away',
+    distance: '1.8km',
+    reward: 75,
+    status: 'in-progress',
+    deadline: '2024-01-30'
+  }
+]
 
 export const getProductsByCategory = (category: string) => {
-  if (category === 'All') return mockProducts;
-  return mockProducts.filter(product => product.category === category);
-};
+  if (category === 'All') return mockProducts
+  return mockProducts.filter((product) => product.category === category)
+}
 
 export const searchProducts = (query: string, category: string = 'All') => {
-  const filteredByCategory = getProductsByCategory(category);
-  if (!query) return filteredByCategory;
-  
-  return filteredByCategory.filter(product =>
-    product.title.toLowerCase().includes(query.toLowerCase()) ||
-    product.description?.toLowerCase().includes(query.toLowerCase()) ||
-    product.category.toLowerCase().includes(query.toLowerCase())
-  );
-}; 
+  const filteredByCategory = getProductsByCategory(category)
+  if (!query) return filteredByCategory
+
+  return filteredByCategory.filter(
+    (product) =>
+      product.title.toLowerCase().includes(query.toLowerCase()) ||
+      product.description?.toLowerCase().includes(query.toLowerCase()) ||
+      product.category.toLowerCase().includes(query.toLowerCase())
+  )
+}

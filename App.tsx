@@ -5,6 +5,7 @@ import SearchScreen from './src/screens/SearchScreen'
 import SellScreen from './src/screens/SellScreen'
 import ChatScreen from './src/screens/ChatScreen'
 import ProfileScreen from './src/screens/ProfileScreen'
+import RewardsScreen from './src/screens/RewardsScreen'
 import BottomTabBar from './src/components/BottomTabBar'
 
 export default function App() {
@@ -27,6 +28,8 @@ export default function App() {
         return <SellScreen />
       case 'Chat':
         return <ChatScreen />
+      case 'Rewards':
+        return <RewardsScreen />
       case 'Profile':
         return <ProfileScreen />
       default:

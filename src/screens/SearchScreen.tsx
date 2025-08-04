@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   View,
   Text,
@@ -7,22 +7,26 @@ import {
   TouchableOpacity,
   ScrollView,
   FlatList,
-  Dimensions,
-} from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import ProductCard from '../components/ProductCard';
-import { mockProducts, searchProducts, getProductsByCategory } from '../services/mockData';
+  Dimensions
+} from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient'
+import ProductCard from '../components/ProductCard'
+import {
+  mockProducts,
+  searchProducts,
+  getProductsByCategory
+} from '../services/mockData'
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get('window')
 
 interface SearchScreenProps {
-  navigation?: any;
+  navigation?: any
 }
 
 const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [searchResults, setSearchResults] = useState(mockProducts);
+  const [searchQuery, setSearchQuery] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('All')
+  const [searchResults, setSearchResults] = useState(mockProducts)
 
   const categories = [
     'All',
@@ -31,37 +35,34 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
     'Home & Garden',
     'Sports',
     'Books',
-    'Vehicles',
-  ];
+    'Vehicles'
+  ]
 
   const handleSearch = () => {
-    const results = searchProducts(searchQuery, selectedCategory);
-    setSearchResults(results);
-  };
+    const results = searchProducts(searchQuery, selectedCategory)
+    setSearchResults(results)
+  }
 
   const handleProductPress = (productId: string) => {
-    console.log('Product pressed:', productId);
+    console.log('Product pressed:', productId)
     // TODO: Navigate to product detail
-  };
+  }
 
   const handleCategoryPress = (category: string) => {
-    setSelectedCategory(category);
-    const results = searchProducts(searchQuery, category);
-    setSearchResults(results);
-  };
+    setSelectedCategory(category)
+    const results = searchProducts(searchQuery, category)
+    setSearchResults(results)
+  }
 
   const handleFavoritePress = (productId: string) => {
-    console.log('Favorite pressed:', productId);
+    console.log('Favorite pressed:', productId)
     // TODO: Toggle favorite
-  };
+  }
 
   return (
     <View style={styles.container}>
       {/* Header */}
-      <LinearGradient
-        colors={['#007AFF', '#0056CC']}
-        style={styles.header}
-      >
+      <LinearGradient colors={['#007AFF', '#0056CC']} style={styles.header}>
         <Text style={styles.headerTitle}>🔍 Search</Text>
       </LinearGradient>
 
@@ -94,15 +95,17 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
             key={category}
             style={[
               styles.categoryButton,
-              selectedCategory === category && styles.categoryButtonActive,
+              selectedCategory === category && styles.categoryButtonActive
             ]}
             onPress={() => handleCategoryPress(category)}
           >
             <Text
               style={[
                 styles.categoryText,
-                selectedCategory === category && styles.categoryTextActive,
+                selectedCategory === category && styles.categoryTextActive
               ]}
+              numberOfLines={1}
+              ellipsizeMode="tail"
             >
               {category}
             </Text>
@@ -117,7 +120,7 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
             ? `${searchResults.length} results found`
             : 'Search for products to see results'}
         </Text>
-        
+
         <FlatList
           data={searchResults}
           keyExtractor={(item) => item.id}
@@ -144,29 +147,29 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
         )}
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#f8f9fa'
   },
   header: {
     paddingTop: 50,
     paddingBottom: 20,
-    paddingHorizontal: 20,
+    paddingHorizontal: 20
   },
   headerTitle: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#fff',
-    textAlign: 'center',
+    textAlign: 'center'
   },
   searchContainer: {
     paddingHorizontal: 20,
     paddingVertical: 15,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   },
   searchBar: {
     flexDirection: 'row',
@@ -174,90 +177,99 @@ const styles = StyleSheet.create({
     backgroundColor: '#f8f9fa',
     borderRadius: 12,
     paddingHorizontal: 15,
-    paddingVertical: 12,
+    paddingVertical: 12
   },
   searchIcon: {
     fontSize: 18,
-    marginRight: 10,
+    marginRight: 10
   },
   searchInput: {
     flex: 1,
     fontSize: 16,
-    color: '#333',
+    color: '#333'
   },
   searchButton: {
     backgroundColor: '#007AFF',
     paddingHorizontal: 20,
     paddingVertical: 8,
-    borderRadius: 8,
+    borderRadius: 8
   },
   searchButtonText: {
     color: '#fff',
     fontWeight: '600',
-    fontSize: 14,
+    fontSize: 14
   },
   categoryContainer: {
     backgroundColor: '#fff',
-    paddingVertical: 10,
+    paddingVertical: 0
   },
   categoryContent: {
     paddingHorizontal: 20,
+    paddingRight: 30,
+    paddingVertical: 4
   },
   categoryButton: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    marginRight: 10,
-    borderRadius: 20,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    marginRight: 6,
+    borderRadius: 8,
     backgroundColor: '#f8f9fa',
+    width: 80,
+    height: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0
   },
   categoryButtonActive: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#007AFF'
   },
   categoryText: {
-    fontSize: 14,
+    fontSize: 9,
     color: '#666',
     fontWeight: '500',
+    textAlign: 'center',
+    lineHeight: 10
   },
   categoryTextActive: {
     color: '#fff',
-    fontWeight: '600',
+    fontWeight: '600'
   },
   resultsContainer: {
     flex: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: 20
   },
   resultsTitle: {
     fontSize: 16,
     fontWeight: '600',
     color: '#333',
     marginBottom: 15,
-    textAlign: 'center',
+    textAlign: 'center'
   },
   resultsList: {
-    paddingBottom: 20,
+    paddingBottom: 20
   },
   emptyState: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 40,
+    paddingHorizontal: 40
   },
   emptyStateIcon: {
     fontSize: 64,
-    marginBottom: 20,
+    marginBottom: 20
   },
   emptyStateTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#333',
-    marginBottom: 10,
+    marginBottom: 10
   },
   emptyStateText: {
     fontSize: 16,
     color: '#666',
     textAlign: 'center',
-    lineHeight: 24,
-  },
-});
+    lineHeight: 24
+  }
+})
 
-export default SearchScreen; 
+export default SearchScreen
