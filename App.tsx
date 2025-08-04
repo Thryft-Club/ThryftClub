@@ -6,14 +6,24 @@ import SellScreen from './src/screens/SellScreen'
 import ChatScreen from './src/screens/ChatScreen'
 import ProfileScreen from './src/screens/ProfileScreen'
 import RewardsScreen from './src/screens/RewardsScreen'
+import LoginScreen from './src/screens/LoginScreen'
 import BottomTabBar from './src/components/BottomTabBar'
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('Home')
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   const handleTabPress = (tabName: string) => {
     console.log('Tab pressed:', tabName)
     setActiveTab(tabName)
+  }
+
+  const handleLogin = () => {
+    setIsAuthenticated(true)
+  }
+
+  const handleLogout = () => {
+    setIsAuthenticated(false)
   }
 
   const renderScreen = () => {
@@ -31,10 +41,20 @@ export default function App() {
       case 'Rewards':
         return <RewardsScreen />
       case 'Profile':
-        return <ProfileScreen />
+        return <ProfileScreen onLogout={handleLogout} />
       default:
         return <HomeScreen />
     }
+  }
+
+  // Show login screen if not authenticated
+  if (!isAuthenticated) {
+    return (
+      <View style={styles.container}>
+        <StatusBar barStyle="light-content" backgroundColor="#007AFF" />
+        <LoginScreen onLogin={handleLogin} />
+      </View>
+    )
   }
 
   return (

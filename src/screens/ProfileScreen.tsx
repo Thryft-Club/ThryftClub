@@ -20,6 +20,7 @@ import ProductCard from '../components/ProductCard'
 
 interface ProfileScreenProps {
   navigation?: any
+  onLogout?: () => void
 }
 
 interface MenuItem {
@@ -29,7 +30,10 @@ interface MenuItem {
   action: () => void
 }
 
-const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
+const ProfileScreen: React.FC<ProfileScreenProps> = ({
+  navigation,
+  onLogout
+}) => {
   const [activeTab, setActiveTab] = useState('profile')
 
   const menuItems: MenuItem[] = [
@@ -76,7 +80,11 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
       action: () => {
         Alert.alert('Logout', 'Are you sure you want to logout?', [
           { text: 'Cancel', style: 'cancel' },
-          { text: 'Logout', style: 'destructive' }
+          {
+            text: 'Logout',
+            style: 'destructive',
+            onPress: () => onLogout?.()
+          }
         ])
       }
     }
